@@ -1,34 +1,32 @@
+import { Content } from './components/Content.jsx'
+import { Scoreboard } from '/src/components/Scoreboard.jsx'
+import { giffer} from './components/giffer.js'
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [round, setRound] = useState(1)
+  const fullList = giffer('test')
+  const [score, setScore] = useState({current: 0, best: 0})
+  
+  function changeScore (bool) {
+    //three states: reset current score to 0, increase only current score, or increase current and best (when they're tied)
+    if(bool) {setScore({...score, current:0})}
+    else {
+      const inc = score.current +1;
+      (score.best > score.current) ? 
+      setScore({...score, current: inc}) :
+      setScore({current: inc, best: inc})
+    }
+  }
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <header>
+      <h1>Memory Cards!</h1>
+      <h2>{`Round ${round}`}</h2>
+        <Scoreboard current={score.current} best={score.best} />
+      </header>
+      <Content round={round} list={fullList} onClick={changeScore} />
+    </div>
   )
 }
 
