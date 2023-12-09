@@ -1,11 +1,12 @@
 import { Content } from './components/Content.jsx'
 import { Scoreboard } from '/src/components/Scoreboard.jsx'
-import { giffer} from './components/giffer.js'
+import { Victory } from '/src/components/Victory.jsx'
+import { Start } from './components/Start.jsx'
 import { useState } from 'react'
 
 function App() {
   const [round, setRound] = useState(1)
-  const fullList = giffer('test')
+  const [fullList, setFullList] = useState(null)
   const [score, setScore] = useState({current: 0, best: 0})
   
   function changeScore (bool) {
@@ -18,6 +19,7 @@ function App() {
       setScore({current: inc, best: inc})
     }
   }
+
   return (
     <div>
       <header>
@@ -25,7 +27,14 @@ function App() {
       <h2>{`Round ${round}`}</h2>
         <Scoreboard current={score.current} best={score.best} />
       </header>
-      <Content round={round} list={fullList} onClick={changeScore} />
+      <main>
+        {
+          (!fullList) ? <Start theme={setFullList} />
+          : (fullList && round < 6) ? <Content round={round} list={fullList} onClick={changeScore} roundOver={setRound} />
+          : <Victory />
+        }
+
+      </main>
     </div>
   )
 }

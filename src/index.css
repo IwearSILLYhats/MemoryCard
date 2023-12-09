@@ -12,36 +12,39 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-html{
-  width: 100%;
+html {
+  box-sizing: border-box;
 }
-body {
-  width: 100%;
+*, *:before, *:after {
+  box-sizing: inherit;
 }
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-
 header{
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-
 main{
   width: 100%;
   padding: 2rem;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  justify-content:center;
 }
 
 .card {
+  border-radius: 5px;
+  width: 20%;
   background-color: gray;
-  padding: 2rem;
+  padding: 1rem;
+}
+.card img{
+  max-width: 100%;
 }
 
 .card:hover{
